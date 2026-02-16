@@ -1,1 +1,9 @@
 out/
+
+.idea/
+*.iml
+*.xml
+
+log.txt
+
+lib/
