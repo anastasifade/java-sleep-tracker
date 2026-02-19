@@ -13,10 +13,11 @@ public class CountSessionsByQualityFunction implements SleepAnalysisFunction {
 
     @Override
     public String performAnalysis(SleepData data) {
-        return "Количество сессий сна " + quality.getGenitive() + " качества: " +
+        return String.format("Количество сессий сна %s качества: %s",
+                quality.getGenitive(),
                 data.getSleepSessions()
                         .stream()
                         .filter(session -> session.getQuality().equals(quality))
-                        .count();
+                        .count());
     }
 }

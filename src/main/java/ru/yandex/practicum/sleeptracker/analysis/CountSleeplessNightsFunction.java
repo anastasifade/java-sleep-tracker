@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public class CountSleeplessNightsFunction implements SleepAnalysisFunction {
 
-    List<SleepSession> sessions;
+    private List<SleepSession> sessions;
 
     @Override
     public String performAnalysis(SleepData data) {
