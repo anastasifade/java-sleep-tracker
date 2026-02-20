@@ -20,6 +20,7 @@ public class AnalyzeChronotypeTest {
     private static SleepSession owlSession;
     private static SleepSession larkSession;
     private static SleepSession pigeonSession;
+    private static SleepSession daytimeSession;
     private static SleepData data;
     private static String output;
 
@@ -36,6 +37,8 @@ public class AnalyzeChronotypeTest {
         pigeonSession = new SleepSession(LocalDateTime.of(date, LocalTime.of(20, 0)),
                 LocalDateTime.of(date.plusDays(1), LocalTime.of(10, 0)),
                 SleepQuality.GOOD);
+        daytimeSession = new SleepSession(LocalDateTime.of(date, LocalTime.of(12, 0)),
+                LocalDateTime.of(date, LocalTime.of(14, 0)), SleepQuality.GOOD);
         output = "Ваш хронотип: ";
     }
 
@@ -90,4 +93,15 @@ public class AnalyzeChronotypeTest {
         String expectedOutput = output + Chronotype.PIGEON;
         Assertions.assertEquals(expectedOutput, function.performAnalysis(data));
     }
+
+    @Test
+    public void shouldNotCountDaytimeSessions() {
+        data.addSleepSession(owlSession);
+        data.addSleepSession(daytimeSession);
+        data.addSleepSession(daytimeSession);
+
+        String expectedOutput = output + Chronotype.OWL;
+        Assertions.assertEquals(expectedOutput, function.performAnalysis(data));
+    }
+
 }
