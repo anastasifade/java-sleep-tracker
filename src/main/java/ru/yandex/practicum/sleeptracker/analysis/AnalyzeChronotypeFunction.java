@@ -18,7 +18,7 @@ public class AnalyzeChronotypeFunction implements SleepAnalysisFunction {
         return "Ваш хронотип: " + getChronotype(getChronotypesCount(data.getSleepSessions()));
     }
 
-    private String getChronotype(Map <Chronotype, Long> chronotypesCount) {
+    private String getChronotype(Map<Chronotype, Long> chronotypesCount) {
 
         if (chronotypesCount.isEmpty()) {
             return "[недостаточно данных]";
