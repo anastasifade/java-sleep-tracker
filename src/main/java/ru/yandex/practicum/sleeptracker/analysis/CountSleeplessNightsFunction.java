@@ -44,15 +44,14 @@ public class CountSleeplessNightsFunction implements SleepAnalysisFunction {
 
     private boolean hasSleeplessNight(LocalDate day) {
 
-        if (getSessionForDate(day).isEmpty()) return true;
-        SleepSession session = getSessionForDate(day).get();
-        return session.getStart().isAfter(LocalDateTime.of(session.getFinish().toLocalDate(),
-                LocalTime.of(6, 0)));
+        return sessions.stream()
+                .filter(session ->
+                        overlaps(session, LocalDateTime.of(day, LocalTime.of(0, 0))))
+                .findFirst()
+                .isEmpty();
     }
 
-    private Optional<SleepSession> getSessionForDate(LocalDate date) {
-        return sessions.stream()
-                .filter(session -> session.getFinish().toLocalDate().isEqual(date))
-                .findFirst();
+    private boolean overlaps(SleepSession session, LocalDateTime midnight) {
+        return session.getStart().isBefore(midnight.plusHours(6)) && session.getFinish().isAfter(midnight);
     }
 }
