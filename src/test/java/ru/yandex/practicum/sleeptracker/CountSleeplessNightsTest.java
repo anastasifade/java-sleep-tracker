@@ -93,4 +93,27 @@ public class CountSleeplessNightsTest {
         Assertions.assertEquals(expectedOutput, function.performAnalysis(data));
     }
 
+    @Test
+    public void zeroExpectedForSingleMultiDaySession() {
+        data.addSleepSession(new SleepSession(LocalDateTime.of(firstDay, earlyMorning),
+                LocalDateTime.of(firstDay.plusDays(5), earlyMorning),
+                SleepQuality.BAD));
+        String expectedOutput = output + 0;
+        Assertions.assertEquals(expectedOutput, function.performAnalysis(data));
+    }
+
+    @Test
+    public void zeroExpectedForConsecutiveMultiDaySessions() {
+        SleepSession first = new SleepSession(LocalDateTime.of(firstDay, earlyMorning),
+                LocalDateTime.of(firstDay.plusDays(5), earlyMorning),
+                SleepQuality.BAD);
+        SleepSession second = new SleepSession(first.getFinish(), first.getFinish().plusDays(5), SleepQuality.BAD);
+
+        data.addSleepSession(first);
+        data.addSleepSession(second);
+
+        String expectedOutput = output + 0;
+        Assertions.assertEquals(expectedOutput, function.performAnalysis(data));
+    }
+
 }
